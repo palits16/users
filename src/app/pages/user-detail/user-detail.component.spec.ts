@@ -8,24 +8,32 @@ import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { USERS } from 'src/app/mock/mock-data';
 import { Location } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 describe('UserDetailComponent', () => {
   let component: UserDetailComponent;
   let store: Store;
   let fixture: ComponentFixture<UserDetailComponent>;
   let subscription: any;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
+  let routerSpy: jasmine.SpyObj<Router>;
   let locationSpy: jasmine.SpyObj<Location>;
 
 
-
   beforeEach(async () => {
-    const locationMock = jasmine.createSpyObj('Location', ['back']);
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['isAuthenticated']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    locationSpy = jasmine.createSpyObj('Location', ['back']);
 
     await TestBed.configureTestingModule({
-      imports: [NgxsModule.forRoot([UserState]), HttpClientTestingModule],
+      imports: [NgxsModule.forRoot([UserState]),RouterTestingModule, HttpClientTestingModule],
       declarations: [UserDetailComponent],
       providers: [
         Store,
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: Router, useValue: routerSpy },
         { provide: Location, useValue: locationSpy }
       ],
     }).compileComponents();
@@ -37,9 +45,21 @@ describe('UserDetailComponent', () => {
     store = TestBed.inject(Store);
   });
 
-  it('should call location.back when goBack is called', () => {
+  it('should navigate to /users if authenticated', () => {
+    authServiceSpy.isAuthenticated.and.returnValue(of(true));
+
     component.goBack();
-    expect(locationSpy.back).toHaveBeenCalled();
+
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/users']);
+    expect(locationSpy.back).not.toHaveBeenCalled();
+  });
+
+  it('should call location.back if not authenticated', () => {
+    authServiceSpy.isAuthenticated.and.returnValue(of(false));
+
+    component.goBack();
+
+    expect(locationSpy.back).not.toHaveBeenCalled();
   });
 
   it('should create', () => {
