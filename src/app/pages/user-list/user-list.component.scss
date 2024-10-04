@@ -1,0 +1,86 @@
+.user-list-container {
+  margin: 60px auto;
+  max-width: 100%;
+}
+
+table,
+.table-container {
+  width: 100%;
+}
+
+.mat-row .mat-cell {
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .mat-table {
+    max-width: 100%;
+  }
+
+  table,
+  .table-container {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .user-list-container {
+    margin: 60px 10%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .mat-table {
+    max-width: 100%;
+  }
+
+  table,
+  .table-container {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .user-list-container {
+    margin: 60px;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .mat-table {
+    max-width: 100%;
+  }
+
+  table,
+  .table-container {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .user-list-container {
+    margin: 60px 40px;
+    max-width: 100%;
+  }
+}
+
+button.mat-icon-button {
+  position: relative;
+}
+
+.spinner-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-left: 1em;
+}
+
+.spinner-wrapper mat-spinner {
+    color: #fff; /* Change the stroke color to white */
+    // background-color: #333; /* Add a background color to the spinner */
+    // border-radius: 50%; /* Make the spinner a circle */
+  }
+
+  .spinner-wrapper mat-spinner {
+    z-index: 1; /* Bring the spinner to the front */
+  }
