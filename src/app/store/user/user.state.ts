@@ -35,22 +35,6 @@ export class UserState {
     return state.errors;
   }
 
-  // @Action(GetUsers)
-  // getUsers(ctx: StateContext<UserStateModel>) {
-  //   return this.userService.getUsers().pipe(
-  //     retryWhen(errors => errors.pipe(
-  //       tap(error => alert('Error occured .. retrying to get users.')),
-  //       delayWhen(() => timer(1000)),
-  //       take(3)
-  //     )),
-  //     tap((users: any) => ctx.patchState({ users })),
-  //     catchError((error: any) => {
-  //       ctx.patchState({ errors: error.message });
-  //       return of(null);
-  //     })
-  //   );
-  // }
-
   @Action(ApplyFilter)
   applyFilter(ctx: StateContext<UserStateModel>, action: ApplyFilter) {
     const state: UserStateModel = ctx.getState();

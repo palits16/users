@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoginComponent } from './login.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,7 +51,6 @@ describe('LoginComponent', () => {
   it('should navigate to returnUrl on successful login', () => {
     authService.login.and.returnValue(of(true));
     spyOn(router, 'navigate');
-    spyOn(console, 'log');
 
     component.onSubmit();
 

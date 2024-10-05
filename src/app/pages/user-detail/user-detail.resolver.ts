@@ -25,7 +25,6 @@ export class UserDetailResolver implements Resolve<any> {
         }
       }),
       catchError((error: any) => {
-        console.error(error);
         this.router.navigate(['/not-found']);
         return of({});
       })

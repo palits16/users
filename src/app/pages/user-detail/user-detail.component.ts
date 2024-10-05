@@ -23,11 +23,13 @@ export class UserDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/users']);
-    } else {
-      this.location.back();
-    }
+    this.authService.isAuthenticated().subscribe((isAuthenticated: boolean) => {
+      if (isAuthenticated) {
+        this.router.navigate(['/users']);
+      } else {
+        this.location.back();
+      }
+    });
   }
 
 }

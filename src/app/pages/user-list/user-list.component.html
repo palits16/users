@@ -33,7 +33,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateToUserDetails(row.id)"></tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[3, 5]" showFirstLastButtons aria-label="Select page of users">
+        <mat-paginator [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons aria-label="Select page of users">
         </mat-paginator>
     </div>
 </div>

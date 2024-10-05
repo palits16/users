@@ -1,19 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { UserService } from './user.service';
-
-// Define interfaces for type safety
-interface User {
-  id: number;
-  name: string;
-}
+import { USERS } from '../mock/mock-data';
+import { User } from '../interface/user.interface';
 
 describe('User Service', () => {
   let service: UserService;
   let httpMock: HttpTestingController;
 
   // Constants for repeated strings
-  const apiUrl = 'https://jsonplaceholder.typicode.com/users';
+  const apiUrl: string = 'https://jsonplaceholder.typicode.com/users';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -34,29 +30,26 @@ describe('User Service', () => {
   });
 
   it('should retrieve users from the API via GET', () => {
-    const mockUsers: User[] = [
-      { id: 1, name: 'John Doe' },
-      { id: 2, name: 'Jane Doe' }
-    ];
+    const mockUsers: User[] = USERS;
 
     service.getUsers().subscribe((users: User[]) => {
-      expect(users.length).toBe(2);
+      expect(users.length).toBe(10);
       expect(users).toEqual(mockUsers);
     });
 
-    const req = httpMock.expectOne(apiUrl);
+    const req: TestRequest = httpMock.expectOne(apiUrl);
     expect(req.request.method).toBe('GET');
     req.flush(mockUsers);
   });
 
   it('should retrieve a user by ID from the API via GET', () => {
-    const mockUser: User = { id: 1, name: 'John Doe' };
+    const mockUser: User = USERS[0];
 
-    service.getUser ('1').subscribe((user: User) => {
+    service.getUser('1').subscribe((user: User) => {
       expect(user).toEqual(mockUser);
     });
 
-    const req = httpMock.expectOne(`${apiUrl}/1`);
+    const req: TestRequest = httpMock.expectOne(`${apiUrl}/1`);
     expect(req.request.method).toBe('GET');
     req.flush(mockUser);
   });
@@ -69,7 +62,7 @@ describe('User Service', () => {
       }
     );
 
-    const req = httpMock.expectOne(apiUrl);
+    const req: TestRequest = httpMock.expectOne(apiUrl);
     req.flush('Error', { status: 500, statusText: 'Server Error' });
   });
 });

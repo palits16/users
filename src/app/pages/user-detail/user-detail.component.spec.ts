@@ -59,7 +59,8 @@ describe('UserDetailComponent', () => {
 
     component.goBack();
 
-    expect(locationSpy.back).not.toHaveBeenCalled();
+    expect(routerSpy.navigate).not.toHaveBeenCalledWith(['/users']);
+    expect(locationSpy.back).toHaveBeenCalled();
   });
 
   it('should create', () => {

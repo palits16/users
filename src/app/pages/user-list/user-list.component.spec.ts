@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 import { ComponentFixture } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
-import { UserDatasource } from 'src/app/interface/user.interface';
+import { User, UserDatasource } from 'src/app/interface/user.interface';
 import { USERS } from 'src/app/mock/mock-data';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -59,14 +59,14 @@ describe('UserListComponent', () => {
   });
 
   it('should dispatch ApplyFilter action with correct filter value', () => {
-    const filterValue = 'test';
+    const filterValue: string = 'test';
     component.applyFilter(filterValue);
 
     expect(storeSpy.dispatch).toHaveBeenCalledWith(new ApplyFilter(filterValue));
   });
 
   it('should set dataSource filter correctly', () => {
-    const filterValue = 'Test Filter';
+    const filterValue: string = 'Test Filter';
     component.applyFilter(filterValue);
 
     expect(component.dataSource.filter).toBe(filterValue.trim().toLowerCase());
@@ -83,20 +83,20 @@ describe('UserListComponent', () => {
   });
 
   it('should navigate to user details', () => {
-    const rowId = 1;
+    const rowId: number = 1;
     router.navigate.and.callThrough();
     component.navigateToUserDetails(rowId);
     expect(router.navigate).toHaveBeenCalledWith(['/users', rowId]);
   });
 
   it('should trackby function', () => {
-    const index = 0;
-    const item = { id: 1 };
+    const index: number = 0;
+    const item: any = { id: 1 };
     expect(component.trackByFn(index, item)).toBe(item.id);
   });
 
   it('should load users', () => {
-    const users = USERS;
+    const users: User[] = USERS;
     store.select.and.returnValue(of(users));
     component.loadUsers();
     expect(component.dataSource.data).toBe(users);

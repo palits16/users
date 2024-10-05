@@ -36,20 +36,20 @@ describe('UserState', () => {
 
       store.dispatch(new GetUsers());
 
-      const users = store.selectSnapshot(UserState.getUsers);
+      const users: User[] = store.selectSnapshot(UserState.getUsers);
       expect(users).toEqual(mockUsers);
       expect(userService.getUsers).toHaveBeenCalled();
     });
 
     it('should handle errors', () => {
-        const errorMessage = 'Failed to load users';
+        const errorMessage: string = 'Failed to load users';
         userService.getUsers.and.returnValue(
           throwError(() => new Error(errorMessage))
         );
       
         store.dispatch(new GetUsers());
       
-        const users = store.selectSnapshot(UserState.getUsers);
+        const users: User[] = store.selectSnapshot(UserState.getUsers);
         expect(users).toEqual(USERS);
       });
   });
@@ -60,7 +60,7 @@ describe('UserState', () => {
   
         store.dispatch(new GetUsers());
   
-        const users = store.selectSnapshot(UserState.getUsers);
+        const users: User[] = store.selectSnapshot(UserState.getUsers);
         expect(users).toEqual(mockUsers);
         expect(userService.getUsers).toHaveBeenCalled();
       });

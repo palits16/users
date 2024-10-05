@@ -11,7 +11,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<boolean> {
     if (username === this.username && password === this.password) {
-      const token = Math.random().toString(36).substr(2, 10);
+      const token: string = Math.random().toString(36).substr(2, 10);
       localStorage.setItem(this.tokenKey, token);
       return of(true);
     } else {
